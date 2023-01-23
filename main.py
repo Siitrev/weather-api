@@ -4,10 +4,11 @@ from flask import Flask, render_template
 
 app = Flask(__name__)
 
-
+table_df = pd.read_csv("data/stations.txt",skiprows=17)
+table_df = table_df[["STAID","STANAME                                 "]]
 @app.route("/")
 def home():
-    return render_template("home.html")
+    return render_template("home.html",table=table_df.to_html())
 
 
 @app.route("/api/v1/<station>/<date>", methods=["GET"])
